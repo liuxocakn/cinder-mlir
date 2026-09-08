@@ -1,0 +1,6 @@
+build*/
+__pycache__/
+llvm-mlir-bin/
+llvm-project/
+test/lib/
+test/bin/

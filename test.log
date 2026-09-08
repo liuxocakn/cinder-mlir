@@ -1,0 +1,182 @@
+~/cinder-mlir$ make test
+==========================================================================
+                               C binding                                
+
+=== Performance Comparison (CPU vs MLIR/C) ===
+MLIR Pass: baseline
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     3.17 GFLOPS, MLIR =     3.47 GFLOPS, ratio = 0.91x
+add         : CPU =     7.89 GFLOPS, MLIR =    10.85 GFLOPS, ratio = 0.73x
+relu        : CPU =    10.77 GFLOPS, MLIR =    15.70 GFLOPS, ratio = 0.69x
+full_flow   : CPU =     3.52 GFLOPS, MLIR =     3.49 GFLOPS, ratio = 1.01x
+fusion_flow : CPU =     3.52 GFLOPS, MLIR =     4.34 GFLOPS, ratio = 0.81x
+
+---- f16 ----
+matmul      : CPU =     0.28 GFLOPS, MLIR =     0.57 GFLOPS, ratio = 0.49x
+add         : CPU =     0.07 GFLOPS, MLIR =    17.29 GFLOPS, ratio = 0.00x
+relu        : CPU =     0.18 GFLOPS, MLIR =     0.42 GFLOPS, ratio = 0.43x
+full_flow   : CPU =     0.26 GFLOPS, MLIR =     0.58 GFLOPS, ratio = 0.45x
+fusion_flow : CPU =     0.26 GFLOPS, MLIR =     0.55 GFLOPS, ratio = 0.47x
+=== Performance Comparison (CPU vs MLIR/C) ===
+MLIR Pass: vectorize
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     4.10 GFLOPS, MLIR =    64.76 GFLOPS, ratio = 0.06x
+add         : CPU =    12.43 GFLOPS, MLIR =    12.11 GFLOPS, ratio = 1.03x
+relu        : CPU =     7.45 GFLOPS, MLIR =    10.66 GFLOPS, ratio = 0.70x
+full_flow   : CPU =     3.34 GFLOPS, MLIR =    36.82 GFLOPS, ratio = 0.09x
+fusion_flow : CPU =     3.34 GFLOPS, MLIR =    43.00 GFLOPS, ratio = 0.08x
+
+---- f16 ----
+matmul      : CPU =     0.27 GFLOPS, MLIR =     3.97 GFLOPS, ratio = 0.07x
+add         : CPU =     0.07 GFLOPS, MLIR =     0.98 GFLOPS, ratio = 0.07x
+relu        : CPU =     0.17 GFLOPS, MLIR =     0.41 GFLOPS, ratio = 0.42x
+full_flow   : CPU =     0.25 GFLOPS, MLIR =     3.59 GFLOPS, ratio = 0.07x
+fusion_flow : CPU =     0.25 GFLOPS, MLIR =     3.72 GFLOPS, ratio = 0.07x
+=== Performance Comparison (CPU vs MLIR/C) ===
+MLIR Pass: linalg
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     3.95 GFLOPS, MLIR =    28.92 GFLOPS, ratio = 0.14x
+add         : CPU =    12.14 GFLOPS, MLIR =     6.34 GFLOPS, ratio = 1.92x
+relu        : CPU =     7.19 GFLOPS, MLIR =    10.43 GFLOPS, ratio = 0.69x
+full_flow   : CPU =     3.88 GFLOPS, MLIR =    18.33 GFLOPS, ratio = 0.21x
+fusion_flow : CPU =     3.88 GFLOPS, MLIR =    33.18 GFLOPS, ratio = 0.12x
+
+---- f16 ----
+matmul      : CPU =     0.28 GFLOPS, MLIR =     1.69 GFLOPS, ratio = 0.16x
+add         : CPU =     0.07 GFLOPS, MLIR =     0.98 GFLOPS, ratio = 0.07x
+relu        : CPU =     0.18 GFLOPS, MLIR =     0.31 GFLOPS, ratio = 0.57x
+full_flow   : CPU =     0.26 GFLOPS, MLIR =     1.73 GFLOPS, ratio = 0.15x
+fusion_flow : CPU =     0.26 GFLOPS, MLIR =     1.61 GFLOPS, ratio = 0.16x
+=== Performance Comparison (CPU vs GPU) ===
+MLIR Pass: gpu
+M=128, N=128, K=128, repeat=1
+
+---- f32 ----
+matmul      : CPU =     4.59 GFLOPS, GPU =    33.72 GFLOPS, ratio = 0.14x
+add         : CPU =    10.36 GFLOPS, GPU =     0.13 GFLOPS, ratio = 80.56x
+relu        : CPU =     7.66 GFLOPS, GPU =     0.17 GFLOPS, ratio = 43.99x
+full_flow   : CPU =     3.17 GFLOPS, GPU =    11.88 GFLOPS, ratio = 0.27x
+fusion_flow : CPU =     3.17 GFLOPS, GPU =    22.69 GFLOPS, ratio = 0.14x
+
+---- f16 ----
+matmul      : CPU =     0.27 GFLOPS, GPU =    17.92 GFLOPS, ratio = 0.01x
+add         : CPU =     0.06 GFLOPS, GPU =     0.17 GFLOPS, ratio = 0.37x
+relu        : CPU =     0.16 GFLOPS, GPU =     0.07 GFLOPS, ratio = 2.45x
+full_flow   : CPU =     0.25 GFLOPS, GPU =     9.57 GFLOPS, ratio = 0.03x
+fusion_flow : CPU =     0.25 GFLOPS, GPU =    25.27 GFLOPS, ratio = 0.01x
+GPU init called
+=== Performance Comparison (CPU vs GPU) ===
+MLIR Pass: nvvm
+M=128, N=128, K=128, repeat=1
+
+---- f32 ----
+matmul      : CPU =     4.23 GFLOPS, GPU =    63.07 GFLOPS, ratio = 0.07x
+add         : CPU =     5.96 GFLOPS, GPU =     0.44 GFLOPS, ratio = 13.59x
+relu        : CPU =     5.91 GFLOPS, GPU =     0.39 GFLOPS, ratio = 15.15x
+full_flow   : CPU =     2.92 GFLOPS, GPU =    32.06 GFLOPS, ratio = 0.09x
+fusion_flow : CPU =     2.92 GFLOPS, GPU =    54.85 GFLOPS, ratio = 0.05x
+
+---- f16 ----
+matmul      : CPU =     0.28 GFLOPS, GPU =    36.15 GFLOPS, ratio = 0.01x
+add         : CPU =     0.07 GFLOPS, GPU =     0.42 GFLOPS, ratio = 0.16x
+relu        : CPU =     0.16 GFLOPS, GPU =     0.49 GFLOPS, ratio = 0.32x
+full_flow   : CPU =     0.26 GFLOPS, GPU =    17.23 GFLOPS, ratio = 0.02x
+fusion_flow : CPU =     0.26 GFLOPS, GPU =    36.40 GFLOPS, ratio = 0.01x
+GPU dtor called
+==========================================================================
+                              Python binding                            
+
+=== Performance Comparison (CPU vs MLIR/Python) ===
+MLIR Pass: Baseline
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =     3.69 GFLOPS, ratio = 0.02x
+add         : CPU =     0.02 GFLOPS, MLIR =     3.93 GFLOPS, ratio = 0.01x
+relu        : CPU =     0.02 GFLOPS, MLIR =     4.86 GFLOPS, ratio = 0.01x
+full_flow   : CPU =     0.08 GFLOPS, MLIR =     4.34 GFLOPS, ratio = 0.02x
+fusion_flow : CPU =     0.08 GFLOPS, MLIR =     4.99 GFLOPS, ratio = 0.02x
+
+---- f16 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =     0.58 GFLOPS, ratio = 0.15x
+add         : CPU =     0.03 GFLOPS, MLIR =     3.57 GFLOPS, ratio = 0.01x
+relu        : CPU =     0.02 GFLOPS, MLIR =     0.41 GFLOPS, ratio = 0.05x
+full_flow   : CPU =     0.08 GFLOPS, MLIR =     0.57 GFLOPS, ratio = 0.14x
+fusion_flow : CPU =     0.08 GFLOPS, MLIR =     0.58 GFLOPS, ratio = 0.14x
+=== Performance Comparison (CPU vs MLIR/Python) ===
+MLIR Pass: Vectorize
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =    48.91 GFLOPS, ratio = 0.00x
+add         : CPU =     0.03 GFLOPS, MLIR =     3.55 GFLOPS, ratio = 0.01x
+relu        : CPU =     0.03 GFLOPS, MLIR =     4.77 GFLOPS, ratio = 0.01x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =    64.11 GFLOPS, ratio = 0.00x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =    62.17 GFLOPS, ratio = 0.00x
+
+---- f16 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =     4.17 GFLOPS, ratio = 0.02x
+add         : CPU =     0.03 GFLOPS, MLIR =     0.70 GFLOPS, ratio = 0.04x
+relu        : CPU =     0.03 GFLOPS, MLIR =     0.31 GFLOPS, ratio = 0.09x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =     3.90 GFLOPS, ratio = 0.02x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =     4.05 GFLOPS, ratio = 0.02x
+=== Performance Comparison (CPU vs MLIR/Python) ===
+MLIR Pass: Linalg
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =    33.03 GFLOPS, ratio = 0.00x
+add         : CPU =     0.03 GFLOPS, MLIR =     2.31 GFLOPS, ratio = 0.01x
+relu        : CPU =     0.03 GFLOPS, MLIR =     2.63 GFLOPS, ratio = 0.01x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =    24.25 GFLOPS, ratio = 0.00x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =    23.48 GFLOPS, ratio = 0.00x
+
+---- f16 ----
+matmul      : CPU =     0.08 GFLOPS, MLIR =     1.67 GFLOPS, ratio = 0.05x
+add         : CPU =     0.03 GFLOPS, MLIR =     0.71 GFLOPS, ratio = 0.04x
+relu        : CPU =     0.03 GFLOPS, MLIR =     0.37 GFLOPS, ratio = 0.08x
+full_flow   : CPU =     0.08 GFLOPS, MLIR =     1.70 GFLOPS, ratio = 0.05x
+fusion_flow : CPU =     0.08 GFLOPS, MLIR =     1.68 GFLOPS, ratio = 0.05x
+=== Performance Comparison (CPU vs MLIR/Python) ===
+MLIR Pass: GPU
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =    13.89 GFLOPS, ratio = 0.01x
+add         : CPU =     0.03 GFLOPS, MLIR =     0.08 GFLOPS, ratio = 0.34x
+relu        : CPU =     0.02 GFLOPS, MLIR =     0.08 GFLOPS, ratio = 0.26x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =    13.31 GFLOPS, ratio = 0.01x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =    13.37 GFLOPS, ratio = 0.01x
+
+---- f16 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =    17.27 GFLOPS, ratio = 0.01x
+add         : CPU =     0.03 GFLOPS, MLIR =     0.07 GFLOPS, ratio = 0.40x
+relu        : CPU =     0.02 GFLOPS, MLIR =     0.07 GFLOPS, ratio = 0.34x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =     9.13 GFLOPS, ratio = 0.01x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =    21.70 GFLOPS, ratio = 0.00x
+GPU init called
+=== Performance Comparison (CPU vs MLIR/Python) ===
+MLIR Pass: NVVM
+M=128, N=128, K=128, repeat=5
+
+---- f32 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =    23.28 GFLOPS, ratio = 0.00x
+add         : CPU =     0.03 GFLOPS, MLIR =     0.09 GFLOPS, ratio = 0.31x
+relu        : CPU =     0.03 GFLOPS, MLIR =     0.10 GFLOPS, ratio = 0.25x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =    20.30 GFLOPS, ratio = 0.00x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =    23.83 GFLOPS, ratio = 0.00x
+
+---- f16 ----
+matmul      : CPU =     0.09 GFLOPS, MLIR =    35.90 GFLOPS, ratio = 0.00x
+add         : CPU =     0.03 GFLOPS, MLIR =     0.11 GFLOPS, ratio = 0.25x
+relu        : CPU =     0.03 GFLOPS, MLIR =     0.16 GFLOPS, ratio = 0.16x
+full_flow   : CPU =     0.09 GFLOPS, MLIR =    21.30 GFLOPS, ratio = 0.00x
+fusion_flow : CPU =     0.09 GFLOPS, MLIR =    27.02 GFLOPS, ratio = 0.00x
+GPU dtor called
+==========================================================================
